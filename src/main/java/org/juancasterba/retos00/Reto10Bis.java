@@ -1,6 +1,7 @@
 package org.juancasterba.retos00;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Reto10Bis {
@@ -54,9 +55,16 @@ public class Reto10Bis {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         System.out.println("Ingrese un texto: ");
-        String texto = s.nextLine().toUpperCase();
-        String resultado = convertirAMorse(texto);
-        System.out.println("El texto en código Morse es: " + resultado);
+        String texto = s.nextLine();
+
+        // analizar si lo ingresado empieza con . o _
+        if (texto.charAt(0) == '.' || texto.charAt(0) == '_') {
+            String resultado = convertirATexto(texto);
+            System.out.println("El codigo Morse ingresado es: " + resultado);
+        } else {
+            String resultado = convertirAMorse(texto.toUpperCase());
+            System.out.println("El texto en código Morse es: " + resultado);
+        }
     }
 
     private static String convertirAMorse(String texto) {
@@ -68,4 +76,21 @@ public class Reto10Bis {
         return morse.toString().trim();
     }
 
+    private static String convertirATexto(String morse) {
+        StringBuilder texto = new StringBuilder();
+        String[] letrasMorse = morse.split(" ");
+        for (String letraMorse : letrasMorse) {
+            if (letraMorse.equals("")) {
+                texto.append(" ");
+            } else {
+                char c = MORSE_CODE_MAP.entrySet().stream()
+                        .filter(entry -> entry.getValue().equals(letraMorse))
+                        .map(Map.Entry::getKey)
+                        .findFirst()
+                        .orElseThrow();
+                texto.append(c);
+            }
+        }
+        return texto.toString().trim();
+    }
 }
