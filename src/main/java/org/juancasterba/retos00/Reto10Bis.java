@@ -52,6 +52,16 @@ public class Reto10Bis {
         MORSE_CODE_MAP.put('/', "_.._.");
     }
 
+    private static final Map<String, Character> INVERSE_MORSE_CODE_MAP = invertMap(MORSE_CODE_MAP);
+
+    private static Map<String, Character> invertMap(Map<Character, String> map) {
+        Map<String, Character> inverseMap = new HashMap<>();
+        for (Map.Entry<Character, String> entry : map.entrySet()) {
+            inverseMap.put(entry.getValue(), entry.getKey());
+        }
+        return inverseMap;
+    }
+
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         System.out.println("Ingrese un texto: ");
